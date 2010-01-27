@@ -1,0 +1,28 @@
+This is just a simple library I threw together for getting
+sessions working with a tornado app I'm working on, using
+memcached as a backend.
+
+It does require the memcache library, I had trouble getting the
+c based one to work. Change the import at the top if you're using
+another memcached interface. It also depends on Tornado
+
+Basic usage is
+
+import sessions
+
+class MainHandler(tornado.web.RequestHandler):
+  def get(self):
+    self.session = sessions.Session(req_obj = self)
+    ... (do stuff)
+
+
+self.session would be a dictionary object. However, because python doesn't
+bubble changes up through dictionary like objects, you'd be smart to
+get into the habit of closing every session based request with
+self.session.save()
+
+I'm working on a request methodlogy for my application whereby I may be able 
+to automate this, and will try to remember to update this documenation with 
+the approach when that's complete.
+
+I'm not offering any support for this, and it's entirely public domain. Do with it as you wish, and do so at your own risk.
