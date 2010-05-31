@@ -28,14 +28,21 @@ class Session(object):
             session_token_ttl=settings.session["SESSION_TOKEN_TTL"],
             session_expire_time=settings.session["SESSION_EXPIRE_TIME"],
             memcache_url=settings.session["MEMCACHE_URL"],
-            req_obj = False):
+            req_obj = False,
+            mc = None):
         """
         __init__ loads the session, checking the browser for a valid session
         token. It will either validate the session and/or create a new one
         if necessary.
         """
 
-        self.mc = memcache.Client(memcache_url, debug=0)
+        # accept being passed a memcache object, which can be
+        # a MemcachePool, as found here
+        # http://jehiah.cz/download/MemcachePool.py.txt
+        if mc is None:
+          self.mc = memcache.Client(memcache_url, debug=0)
+        else:
+          self.mc = mc
 
         # If session is being used on this page view, then go ahead
         # and make the page not cacheable. This makes sure the user
