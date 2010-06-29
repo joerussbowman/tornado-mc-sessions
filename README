@@ -1,3 +1,5 @@
+=== I'm going to move my application to use MongoDB for sessions and probably drop memcached entirely. This project won't be continued by me. ===
+
 This is just a simple library I threw together for getting
 sessions working with a tornado app I'm working on, using
 memcached as a backend.
